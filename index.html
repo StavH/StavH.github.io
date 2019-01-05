@@ -1,0 +1,194 @@
+<html>
+
+<head>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="mdb.min.css" rel="stylesheet">
+    <!-- JQuery -->
+    <script type="text/javascript" src="jquery-3.3.1.min"></script>
+    <!-- Bootstrap tooltips -->
+    <meta charset="ISO-8859-1">
+    <script>
+        $(document).ready(function () {
+            $('#pause').attr("disabled", "disabled");
+            $('#reset').attr("disabled", "disabled");
+            var pause = true;
+            var seconds = 60;
+            var mode = 0;
+            var mintuesDisplay, secondsDisplay;
+            var audio_rush = new Audio('end-game.mp3');
+            var audio_end = new Audio('end.mp3');
+            setInterval(() => {
+                if (!pause) {
+                    seconds = seconds - 1;
+                    mintuesDisplay = Math.floor(seconds / 60);
+                    secondsDisplay = seconds - mintuesDisplay * 60;
+                    switch (mode) {
+                        case 0:
+                            $('#timerPR').html(mintuesDisplay + ":" + (secondsDisplay < 10 ?
+                                "0" : "") + secondsDisplay);
+                            break;
+                        case 1:
+                            $('#timerRP').html(mintuesDisplay + ":" + (secondsDisplay < 10 ?
+                                "0" : "") + secondsDisplay);
+                            break;
+                        case 2:
+                            $('#timerRD').html(mintuesDisplay + ":" + (secondsDisplay < 10 ?
+                                "0" : "") + secondsDisplay);
+                            break;
+                        case 3:
+                            $('#timerCV').html(mintuesDisplay + ":" + (secondsDisplay < 10 ?
+                                "0" : "") + secondsDisplay);
+                            break;
+                    }
+                    if (seconds == 60) {
+                        audio_rush.play();
+                    }
+                    if (seconds == 0) {
+                        if (mode == 3) {
+                            $('#pause').html("Pause");
+                            $('#timerPR').html("01:00");
+                            $('#timerRP').html("07:00");
+                            $('#timerRD').html("07:00");
+                            $('#timerCV').html("07:00");
+                            pause = true;
+                            $('#start').removeAttr("disabled");
+                            $('#pause').attr("disabled", "disabled");
+                            $('#reset').attr("disabled", "disabled");
+                            seconds = 60;
+                            mode = 0;
+                        } else {
+                            mode++;
+                            seconds = 420;
+
+                        }
+                        audio_end.play();
+                    }
+                }
+            }, 1000);
+
+            $('#reset').click(function () {
+                $('#pause').html("Pause");
+                $('#timerPR').html("01:00");
+                $('#timerRP').html("07:00");
+                $('#timerRD').html("07:00");
+                $('#timerCV').html("07:00");
+                pause = true;
+                $('#start').removeAttr("disabled");
+                $('#pause').attr("disabled", "disabled");
+                $('#reset').attr("disabled", "disabled");
+                seconds = 60;
+                mode = 0;
+            });
+            $('#start').click(function () {
+                $('#start').attr("disabled", "disabled");
+                $('#pause').removeAttr("disabled");
+                $('#reset').removeAttr("disabled");
+                pause = false;
+                mode = 0;
+                seconds = 60;
+
+
+            });
+            $('#pause').click(function () {
+                if (pause) {
+                    pause = false;
+                    $('#pause').html("Pause");
+                } else {
+                    $('#pause').html("Play");
+
+                    pause = true;
+                }
+            });
+            $('#btnPR').click(function () {
+                $('#timerPR').html("01:00");
+                $('#timerRP').html("07:00");
+                $('#timerRD').html("07:00");
+                $('#timerCV').html("07:00");
+                $('#start').attr("disabled", "disabled");
+                $('#pause').removeAttr("disabled");
+                $('#reset').removeAttr("disabled");
+                $('#pause').html("Pause");
+                pause = false;
+                seconds = 60;
+                mode = 0;
+
+            });
+            $('#btnRP').click(function () {
+                $('#timerRP').html("07:00");
+                $('#timerRD').html("07:00");
+                $('#timerCV').html("07:00");
+                $('#start').attr("disabled", "disabled");
+                $('#pause').removeAttr("disabled");
+                $('#reset').removeAttr("disabled");
+                $('#pause').html("Pause");
+                pause = false;
+                seconds = 420;
+                mode = 1;
+
+            });
+            $('#btnRD').click(function () {
+                $('#timerRD').html("07:00");
+                $('#timerCV').html("07:00");
+                $('#start').attr("disabled", "disabled");
+                $('#pause').removeAttr("disabled");
+                $('#reset').removeAttr("disabled");
+                $('#pause').html("Pause");
+                pause = false;
+                seconds = 420;
+                mode = 2;
+
+            });
+            $('#btnCV').click(function () {
+                $('#timerRD').html("07:00");
+                $('#timerCV').html("07:00");
+                $('#start').attr("disabled", "disabled");
+                $('#pause').removeAttr("disabled");
+                $('#reset').removeAttr("disabled");
+                $('#pause').html("Pause");
+                pause = false;
+                seconds = 420;
+                mode = 3;
+
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h2>
+        <div id="wrapper" class="card col-8 offset-2  bg-danger">
+            <div class="card-header bg-white justify-content-around row align-items-center ">
+                <img src="FIRSTLego_iconVert_RGB.png" style="height: 10%;" class="">
+                <h1><label class="">Jugding Timer</label></h1>
+                <img class="" src="INTO-ORBIT-Logo_full-color.png" style="height: 10%;">
+            </div>
+            <div class="card-body bg-white">
+                <div class="row ">
+                    <button class="btn-secondary col-4" id="start">Start</button>
+                    <button class="btn-secondary col-4" id="pause">Pause</button>
+                    <button class="btn-secondary col-4" id="reset">Reset</button>
+                </div>
+                <div class="row ">
+                    <button class="btn-warning col-6" id="btnPR">Preperations</button>
+                    <div id="timerPR" class="card text-center col-6">01:00</div>
+                </div>
+                <div class="row ">
+                    <button class="btn-primary  col-6" id="btnRP">Research Project</button>
+                    <div id="timerRP" class="card text-center col-6">07:00</div>
+                </div>
+                <div class="row ">
+                    <button class="btn-success col-6" id="btnRD">Robot Design</button>
+                    <div id="timerRD" class="card text-center col-6">07:00</div>
+                </div>
+                <div class="row ">
+                    <button class="btn-danger col-6" id="btnCV">Core Values</button>
+                    <div id="timerCV" class="card text-center col-6">07:00</div>
+                </div>
+            </div>
+        </div>
+    </h2>
+</body>
+
+</html>
