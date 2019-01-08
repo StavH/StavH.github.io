@@ -3,11 +3,10 @@
 <head>
     <link rel="stylesheet" href="bootstrap.min.css">
     <link href="mdb.min.css" rel="stylesheet">
-    <script src="jquery.min.js"></script>
+    <script src="jquery.mobile.min.js"></script>
     <meta charset="ISO-8859-1">
     <script>
-        $(document).ready(function () {
-            $('#pause').attr("disabled", "disabled");
+        $('#pause').attr("disabled", "disabled");
             $('#reset').attr("disabled", "disabled");
             var pause = true;
             var seconds = 60;
@@ -26,8 +25,8 @@
                                 "0" : "") + secondsDisplay);
                             break;
                         case 1:
-                            $('#timerRP').html(mintuesDisplay + ":" + (secondsDisplay < 10 ?
-                                "0" : "") + secondsDisplay);
+                            timerRP.innerHTML =  mintuesDisplay + ":" + (secondsDisplay < 10 ?
+                                "0" : "") + secondsDisplay;
                             break;
                         case 2:
                             $('#timerRD').html(mintuesDisplay + ":" + (secondsDisplay < 10 ?
@@ -43,9 +42,9 @@
                     }
                     if (seconds == 0) {
                         if (mode == 3) {
-                            $('#pause').html("Pause");
+                            pauseBtn.innerHTML = "Pause";
                             $('#timerPR').html("01:00");
-                            $('#timerRP').html("06:00");
+                            timerRP = "06:00";
                             $('#timerRD').html("07:00");
                             $('#timerCV').html("07:00");
                             pause = true;
@@ -70,10 +69,17 @@
                 }
             }, 1000);
 
-            $('#reset').click(function () {
-                $('#pause').html("Pause");
+        var pauseBtn,timerRP;
+        window.onload(()=>{
+            pauseBtn = document.getElementById("pause");
+            timerRP = document.getElementById("timerRP");
+            
+        });
+            
+            function clickReset(){
+                pauseBtn.innerHTML = "Pause";
                 $('#timerPR').html("01:00");
-                $('#timerRP').html("06:00");
+                timerRP.innerHTML = "06:00";
                 $('#timerRD').html("07:00");
                 $('#timerCV').html("07:00");
                 pause = true;
@@ -82,8 +88,8 @@
                 $('#reset').attr("disabled", "disabled");
                 seconds = 60;
                 mode = 0;
-            });
-            $('#start').click(function () {
+            }
+            function clickStart(){
                 $('#start').attr("disabled", "disabled");
                 $('#pause').removeAttr("disabled");
                 $('#reset').removeAttr("disabled");
@@ -92,33 +98,33 @@
                 seconds = 60;
 
 
-            });
-            $('#pause').click(function () {
+            }
+            function clickPause(){
                 if (pause) {
                     pause = false;
-                    $('#pause').html("Pause");
+                    pauseBtn.innerHTML = "Pause";
                 } else {
-                    $('#pause').html("Play");
+                    pauseBtn.innerHTML = "Play";
 
                     pause = true;
                 }
-            });
-            $('#btnPR').click(function () {
+            }
+            function clickPR(){
                 $('#timerPR').html("01:00");
-                $('#timerRP').html("06:00");
+                timerRP.innerHTML = "06:00";
                 $('#timerRD').html("07:00");
                 $('#timerCV').html("07:00");
                 $('#start').attr("disabled", "disabled");
                 $('#pause').removeAttr("disabled");
                 $('#reset').removeAttr("disabled");
-                $('#pause').html("Pause");
+                pauseBtn.innerHTML = "Pause";
                 pause = false;
                 seconds = 60;
                 mode = 0;
 
-            });
-            $('#btnRP').click(function () {
-                $('#timerRP').html("06:00");
+            }
+            function clickRP(){
+                timerRP.innerHTML = "06:00";
                 $('#timerRD').html("07:00");
                 $('#timerCV').html("07:00");
                 $('#start').attr("disabled", "disabled");
@@ -129,8 +135,8 @@
                 seconds = 360;
                 mode = 1;
 
-            });
-            $('#btnRD').click(function () {
+            }
+            function clickRD(){
                 $('#timerRD').html("07:00");
                 $('#timerCV').html("07:00");
                 $('#start').attr("disabled", "disabled");
@@ -141,8 +147,8 @@
                 seconds = 420;
                 mode = 2;
 
-            });
-            $('#btnCV').click(function () {
+            }
+            function clickCV(){
                 $('#timerRD').html("07:00");
                 $('#timerCV').html("07:00");
                 $('#start').attr("disabled", "disabled");
@@ -153,8 +159,7 @@
                 seconds = 420;
                 mode = 3;
 
-            });
-        });
+            }
     </script>
 </head>
 
@@ -168,24 +173,24 @@
             </div>
             <div class="card-body bg-white">
                 <div class="row ">
-                    <button class="btn-secondary col-4" id="start">Start</button>
-                    <button class="btn-secondary col-4" id="pause">Pause</button>
-                    <button class="btn-secondary col-4" id="reset">Reset</button>
+                    <button class="btn-secondary col-4" id="start" onclick="clickStart()">Start</button>
+                    <button class="btn-secondary col-4" id="pause" onclick="clickPause()">Pause</button>
+                    <button class="btn-secondary col-4" id="reset" onclick="clickReset()">Reset</button>
                 </div>
                 <div class="row ">
-                    <button class="btn-warning col-6" id="btnPR">Preperations</button>
+                    <button class="btn-warning col-6" id="btnPR" onclick="clickPR()">Preperations</button>
                     <div id="timerPR" class="card text-center col-6">01:00</div>
                 </div>
                 <div class="row ">
-                    <button class="btn-primary  col-6" id="btnRP">Research Project</button>
+                    <button class="btn-primary  col-6" id="btnRP" onclick="clickRP()">Research Project</button>
                     <div id="timerRP" class="card text-center col-6">06:00</div>
                 </div>
                 <div class="row ">
-                    <button class="btn-success col-6" id="btnRD">Robot Design</button>
+                    <button class="btn-success col-6" id="btnRD" onclick="clickRD()">Robot Design</button>
                     <div id="timerRD" class="card text-center col-6">07:00</div>
                 </div>
                 <div class="row ">
-                    <button class="btn-danger col-6" id="btnCV">Core Values</button>
+                    <button class="btn-danger col-6" id="btnCV" onclick="clickCV()">Core Values</button>
                     <div id="timerCV" class="card text-center col-6">07:00</div>
                 </div>
             </div>
