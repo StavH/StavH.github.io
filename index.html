@@ -56,7 +56,13 @@
                             mode = 0;
                         } else {
                             mode++;
-                            seconds = 420;
+                            if (mode ==1 ){
+                                seconds = 360;
+                            }
+                            else{
+                                seconds = 420;
+                            }
+                            
 
                         }
                         audio_end.play();
